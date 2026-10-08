@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>ARVI - Exercício 1: Virtual Tour</title>
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script src="https://unpkg.com/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script>
+</head>
+
+<body>
+  <a-scene>
+    <a-assets>
+      <img id="cena1" src="assets/cena1.jpg" />
+      <img id="cena2" src="assets/cena2.jpg" />
+      <img id="cena3" src="assets/cena3.jpg" />
+    </a-assets>
+
+    <a-sky id="sky-bg" src="#cena1" rotation="0 -90 0"></a-sky>
+
+    <a-entity id="rig" position="0 0 0">
+      <a-camera look-controls>
+        <a-cursor id="cursor"
+          animation__click="property: scale; startEvents: click; easing: easeInCubic; dur: 150; from: 0.1 0.1 0.1; to: 1 1 1"
+          animation__fusing="property: fusing; startEvents: fusing; easing: easeInCubic; dur: 1200; from: 1 1 1; to: 0.1 0.1 0.1"
+          event-set__mouseenter="_event: mouseenter; color: #FFD700"
+          event-set__mouseleave="_event: mouseleave; color: #FFF" raycaster="objects: .interactive">
+        </a-cursor>
+      </a-camera>
+    </a-entity>
+
+    <a-entity id="grupo-cena1" class="scene-group" visible="true" scale="1 1 1">
+      <a-plane position="0 1.8 -3" width="3.2" height="1.4" color="#0F172A" opacity="0.9"
+        material="transparent: true; roughness: 0.8">
+        <a-text value="Cena 1: Margem de Lago" align="center" position="0 0.42 0.02" width="3.1"
+          color="#38BDF8"></a-text>
+        <a-text value="Paisagem do que parece ser um lago rodeado de terreno seco e rochoso, com a luz no horizonte."
+          align="center" position="0 -0.1 0.02" width="2.9" color="#E2E8F0" wrap-count="36"></a-text>
+      </a-plane>
+
+      <a-sphere class="interactive portal-btn" position="2.7 1.5 -3" radius="0.4" color="#008CBA"
+        event-set__enter="_event: mouseenter; color: #00E5FF; scale: 1.15 1.15 1.15"
+        event-set__leave="_event: mouseleave; color: #008CBA; scale: 1 1 1" onclick="mudarCena('cena2')">
+        <a-plane position="0 0.65 0" width="1.7" height="0.55" color="#0F172A" opacity="0.92"
+          material="transparent: true; roughness: 0.8">
+          <a-text value="Ir p/ Cena 2\n(Central)" align="center" position="0 0 0.02" width="2.8"
+            color="#38BDF8"></a-text>
+        </a-plane>
+      </a-sphere>
+    </a-entity>
+
+    <a-entity id="grupo-cena2" class="scene-group" visible="false" scale="0 0 0">
+      <a-plane position="0 1.8 -3" width="3.2" height="1.4" color="#0F172A" opacity="0.9"
+        material="transparent: true; roughness: 0.8">
+        <a-text value="Cena 2: Central Abandonada" align="center" position="0 0.42 0.02" width="3.1"
+          color="#38BDF8"></a-text>
+        <a-text
+          value="Instalacoes antigas de uma central abandonada com grandes janelas e infraestuturas ja degradadas pelo tempo, com sinais de vandalismo e grafittis"
+          align="center" position="0 -0.1 0.02" width="2.9" color="#E2E8F0" wrap-count="36"></a-text>
+      </a-plane>
+
+      <a-sphere class="portal-btn" position="-2.7 1.5 -3" radius="0.4" color="#E74C3C"
+        event-set__enter="_event: mouseenter; color: #FF7675; scale: 1.15 1.15 1.15"
+        event-set__leave="_event: mouseleave; color: #E74C3C; scale: 1 1 1" onclick="mudarCena('cena1')">
+        <a-plane position="0 0.65 0" width="1.7" height="0.55" color="#0F172A" opacity="0.92"
+          material="transparent: true; roughness: 0.8">
+          <a-text value="Voltar p/ Cena 1\n(Lago)" align="center" position="0 0 0.02" width="2.8"
+            color="#38BDF8"></a-text>
+        </a-plane>
+      </a-sphere>
+
+      <a-sphere class="portal-btn" position="2.7 1.5 -3" radius="0.4" color="#2ECC71"
+        event-set__enter="_event: mouseenter; color: #55E6C1; scale: 1.15 1.15 1.15"
+        event-set__leave="_event: mouseleave; color: #2ECC71; scale: 1 1 1" onclick="mudarCena('cena3')">
+        <a-plane position="0 0.65 0" width="1.7" height="0.55" color="#0F172A" opacity="0.92"
+          material="transparent: true; roughness: 0.8">
+          <a-text value="Ir p/ Cena 3\n(Teufelsberg)" align="center" position="0 0 0.02" width="2.8"
+            color="#38BDF8"></a-text>
+        </a-plane>
+      </a-sphere>
+    </a-entity>
+
+    <a-entity id="grupo-cena3" class="scene-group" visible="false" scale="0 0 0">
+      <a-plane position="0 1.8 -3" width="3.2" height="1.4" color="#0F172A" opacity="0.9"
+        material="transparent: true; roughness: 0.8">
+        <a-text value="Cena 3: Miradouro" align="center" position="0 0.42 0.02" width="3.1" color="#38BDF8"></a-text>
+        <a-text
+          value="Antiga estacao de radio  rodeada murais de graffiti, com uma vista panoramica sobre a floresta e cidade."
+          align="center" position="0 -0.1 0.02" width="2.9" color="#E2E8F0" wrap-count="36"></a-text>
+      </a-plane>
+
+      <a-sphere class="portal-btn" position="-2.7 1.5 -3" radius="0.4" color="#008CBA"
+        event-set__enter="_event: mouseenter; color: #00E5FF; scale: 1.15 1.15 1.15"
+        event-set__leave="_event: mouseleave; color: #008CBA; scale: 1 1 1" onclick="mudarCena('cena2')">
+        <a-plane position="0 0.65 0" width="1.7" height="0.55" color="#0F172A" opacity="0.92"
+          material="transparent: true; roughness: 0.8">
+          <a-text value="Voltar p/ Cena 2\n(Central)" align="center" position="0 0 0.02" width="2.8"
+            color="#38BDF8"></a-text>
+        </a-plane>
+      </a-sphere>
+    </a-entity>
+  </a-scene>
+
+  <script>
+    function mudarCena(nomeCena) {
+      const sky = document.querySelector('#sky-bg');
+      if (sky) {
+        sky.setAttribute('src', '#' + nomeCena);
+      }
+
+      const todasAsCenas = document.querySelectorAll('.scene-group');
+      todasAsCenas.forEach((grupo) => {
+        const isAtiva = grupo.id === 'grupo-' + nomeCena;
+
+        grupo.setAttribute('visible', isAtiva);
+        grupo.setAttribute('scale', isAtiva ? '1 1 1' : '0 0 0');
+
+        const botoes = grupo.querySelectorAll('.portal-btn');
+        botoes.forEach((btn) => {
+          if (isAtiva) {
+            btn.classList.add('interactive');
+          } else {
+            btn.classList.remove('interactive');
+          }
+        });
+      });
+
+      const cursor = document.querySelector('#cursor');
+      if (cursor && cursor.components && cursor.components.raycaster) {
+        cursor.components.raycaster.refreshObjects();
+      }
+    }
+  </script>
+</body>
+
+</html>
